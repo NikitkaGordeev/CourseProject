@@ -11,7 +11,7 @@
 
 ## Документация
 
-1. [План]([https://github.com/NikitkaGordeev/CourseProject/tree/main/docs](https://github.com/NikitkaGordeev/CourseProject/blob/main/docs/Plan.md)).
+1. [План](https://github.com/NikitkaGordeev/CourseProject/blob/main/docs/Plan.md)
 
 
 ## Установка и запуск
