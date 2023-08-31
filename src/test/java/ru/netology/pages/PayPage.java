@@ -6,8 +6,8 @@ import ru.netology.data.DataHelper;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -25,6 +25,9 @@ public class PayPage {
     private final SelenideElement incorrectFormat = $(byText("Неверный формат"));
     private final SelenideElement successNotification = $(byText("Операция одобрена Банком."));
     private final SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
+    private final SelenideElement lettersInField = $(byValue("qwerty"));
+    private final SelenideElement CyrillicLettersInField = $(byText("йцукен"));
+    private final SelenideElement SpecSymbolsInField = $(byText("!@#$%^&*"));
 
     public void fillCardData(DataHelper.CardData cardData) {
         cardNumberField.setValue(cardData.getNumber());
@@ -34,18 +37,26 @@ public class PayPage {
         cvcField.setValue(cardData.getCvc());
         button.click();
     }
+    public void verifyEmptyFieldInputLetters() {lettersInField.shouldBe(disappear);}
+    public void verifyEmptyFieldInputCyrillicLetters() {CyrillicLettersInField.shouldBe(disappear);}
+    public void verifyEmptyFieldInputSpecSymbols() {SpecSymbolsInField.shouldBe(disappear);}
+
     public void verifyEmptyField() {
         emptyField.shouldBe(Condition.visible);
     }
+
     public void verifyCardValidity() {
         cardValidity.shouldBe(Condition.visible);
     }
+
     public void verifyInvalidCardExpirationDate() {
         invalidСardExpirationDate.shouldBe(Condition.visible);
     }
+
     public void verifyIncorrectFormat() {
         incorrectFormat.shouldBe(Condition.visible);
     }
+
     public void verifySuccessNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }

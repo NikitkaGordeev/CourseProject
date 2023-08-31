@@ -157,17 +157,21 @@ public class DataHelper {
         Faker faker = new Faker();
         return faker.numerify("###");
     }
+
     public static String getCVCEmptyField() {
         return ("");
     }
+
     public static String getLessMinCVC() {
         Faker faker = new Faker();
         return faker.numerify("##");
     }
+
     public static String getMoreMaxCVC() {
         Faker faker = new Faker();
         return faker.numerify("####");
     }
+
     public static String getCVCLetters() {
         return ("qwerty");
     }
