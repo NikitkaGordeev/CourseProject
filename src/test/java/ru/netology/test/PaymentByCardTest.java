@@ -296,6 +296,30 @@ public class PaymentByCardTest {
         payPage.fillCardData(info);
         payPage.verifySuccessNotification();
     }
+    @Test
+    @DisplayName("Ввод латинских букв в поле CVC/CVV")
+    public void EnteringLatinLettersInTheCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info =new CardData("","","","",getCVCLetters());
+        payPage.fillCardData(info);
+        payPage.verifyEmptyFieldInputLetters();
+    }
+    @Test
+    @DisplayName("Ввод букв на кириллице в поле Месяц")
+    public void EnteringCyrillicLettersInTheCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info =new CardData("","","","",getCVCCyrillicLetters());
+        payPage.fillCardData(info);
+        payPage.verifyEmptyFieldInputCyrillicLetters();
+    }
+    @Test
+    @DisplayName("Ввод спецсимволов в поле Месяц")
+    public void EnteringSpecialCharactersInTheCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info =new CardData("","","","",getCVCSpecSymbols());
+        payPage.fillCardData(info);
+        payPage.verifyEmptyFieldInputSpecSymbols();
+    }
 }
 
 
