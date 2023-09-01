@@ -26,8 +26,8 @@ public class PayPage {
     private final SelenideElement successNotification = $(byText("Операция одобрена Банком."));
     private final SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
     private final SelenideElement lettersInField = $(byValue("qwerty")); // для проверки полей по отдельности без заполнения формы полностью
-    private final SelenideElement CyrillicLettersInField = $(byText("йцукен")); // для проверки полей по отдельности без заполнения формы полностью
-    private final SelenideElement SpecSymbolsInField = $(byText("!@#$%^&*")); // для проверки полей по отдельности без заполнения формы полностью
+    private final SelenideElement cyrillicLettersInField = $(byText("йцукен")); // для проверки полей по отдельности без заполнения формы полностью
+    private final SelenideElement specSymbolsInField = $(byText("!@#$%^&*")); // для проверки полей по отдельности без заполнения формы полностью
 
     public void fillCardData(DataHelper.CardData cardData) {
         cardNumberField.setValue(cardData.getNumber());
@@ -37,9 +37,19 @@ public class PayPage {
         cvcField.setValue(cardData.getCvc());
         button.click();
     }
-    public void verifyEmptyFieldInputLetters() {lettersInField.shouldBe(disappear);} // для проверки полей по отдельности без заполнения формы полностью
-    public void verifyEmptyFieldInputCyrillicLetters() {CyrillicLettersInField.shouldBe(disappear);} // для проверки полей по отдельности без заполнения формы полностью
-    public void verifyEmptyFieldInputSpecSymbols() {SpecSymbolsInField.shouldBe(disappear);} // для проверки полей по отдельности без заполнения формы полностью
+
+    public void verifyEmptyFieldInputLetters() {
+        lettersInField.shouldBe(disappear);
+    } // для проверки полей по отдельности без заполнения формы полностью
+
+    public void verifyEmptyFieldInputCyrillicLetters() {
+        cyrillicLettersInField.shouldBe(disappear);
+    } // для проверки полей по отдельности без заполнения формы полностью
+
+    public void verifyEmptyFieldInputSpecSymbols() {
+        specSymbolsInField.shouldBe(disappear);
+    } // для проверки полей по отдельности без заполнения формы полностью
+
 
     public void verifyEmptyField() {
         emptyField.shouldBe(Condition.visible);

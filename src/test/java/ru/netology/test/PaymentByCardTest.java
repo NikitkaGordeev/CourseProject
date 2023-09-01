@@ -6,6 +6,7 @@ import dev.failsafe.internal.util.Assert;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Data;
 import lombok.val;
+import org.checkerframework.checker.units.qual.Length;
 import org.junit.jupiter.api.*;
 import ru.netology.data.SQLHelper;
 import ru.netology.pages.MainPage;
@@ -261,6 +262,39 @@ public class PaymentByCardTest {
         val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getOwnerNumber(), getValidCVC());
         payPage.fillCardData(info);
         payPage.verifyIncorrectFormat();
+    }
+    @Test
+    @DisplayName("Отправка формы с введенными именем и фамилией нижним регистром в поле Владелец") // Баг<=================================================================
+    public void SubmitFormWithLowercaseFirstNameAndLastNameEnteredInTheOwnerField() {
+        val payPage = mainPage.clickByuButton();
+        val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getOwnerLowerCaser(), getValidCVC());
+        payPage.fillCardData(info);
+        payPage.verifyIncorrectFormat();
+    }
+    //Поле "CVC/CVV"
+    @Test
+    @DisplayName("Отправка формы с пустым полем CVC/CVV")
+    public void SubmitFormWithEmptyCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getValidOwner(), getCVCEmptyField());
+        payPage.fillCardData(info);
+        payPage.verifyIncorrectFormat();
+    }
+    @Test
+    @DisplayName("Отправка формы с количеством цифр в поле CVC/CVV меньше минимального")
+    public void SubmitFormWithLessMinNumberDigitsInTheCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getValidOwner(), getLessMinCVC());
+        payPage.fillCardData(info);
+        payPage.verifyIncorrectFormat();
+    }
+    @Test
+    @DisplayName("Отправка формы с количеством цифр в поле CVC/CVV больше максимального")
+    public void SubmitFormWithMoreMaxNumberDigitsInTheCVCField() {
+        val payPage = mainPage.clickByuButton();
+        val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getValidOwner(), getMoreMaxCVC());
+        payPage.fillCardData(info);
+        payPage.verifySuccessNotification();
     }
 }
 
