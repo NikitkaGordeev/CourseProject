@@ -98,7 +98,7 @@ public class DataHelper {
 
     //Поле "Год"
     public static String getValidYearFromNow() {
-        LocalDate dateY = LocalDate.now().plusYears(1);
+        LocalDate dateY = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("YY");
         return dateY.format(format);
     }
