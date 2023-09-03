@@ -18,6 +18,8 @@ public class PayPage {
     private final SelenideElement ownerField = $$(".input").find(exactText("Владелец")).$(".input__control");
     private final SelenideElement cvcField = $("[placeholder='999']");
     private final SelenideElement button = $$(".button").find(exactText("Продолжить"));
+    private final SelenideElement payment = $$("h3.heading").find(Condition.exactText("Оплата по карте"));
+    private final SelenideElement credit = $$("h3.heading").find(Condition.exactText("Кредит по данным карты"));
 
     private final SelenideElement emptyField = $(byText("Поле обязательно для заполнения"));
     private final SelenideElement cardValidity = $(byText("Истёк срок действия карты"));
@@ -73,5 +75,13 @@ public class PayPage {
 
     public void verifyErrorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
+    public PayPage byuButtonTitle() {
+        payment.shouldBe(Condition.visible);
+        return new PayPage();
+    }
+    public PayPage CreditButtonTitle() {
+        credit.shouldBe(Condition.visible);
+        return new PayPage();
     }
 }
