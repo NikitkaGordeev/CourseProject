@@ -19,7 +19,7 @@
 2. Запустить Docker Desktop;
 3. Открыть проект в IDEA;
 4. Запустить БД командой `docker-compose up`;
-5. Запустить приложение командой `java -jar aqa-shop.jar`;
+5. Запустить приложение командой `java -jar ./artifacts/aqa-shop.jar`;
 6. Открыть браузер и ввести в адресную строку `http://localhost:8080/`.             
 
 
