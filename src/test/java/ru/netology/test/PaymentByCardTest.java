@@ -2,21 +2,15 @@ package ru.netology.test;
 
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import dev.failsafe.internal.util.Assert;
 import io.qameta.allure.selenide.AllureSelenide;
-import lombok.Data;
 import lombok.val;
-import org.checkerframework.checker.units.qual.Length;
 import org.junit.jupiter.api.*;
 import ru.netology.data.SQLHelper;
 import ru.netology.pages.MainPage;
-import ru.netology.pages.PayPage;
-import ru.netology.data.DataHelper;
 
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.netology.data.DataHelper.*;
 
 
@@ -45,6 +39,7 @@ public class PaymentByCardTest {
     public void shouldPaymentByCardWithApprovedStatus() {
         val payPage = mainPage.clickByuButton();
         val info = new CardData(getApprovedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getValidOwner(), getValidCVC());
+        payPage.byuButtonTitle();
         payPage.fillCardData(info);
         payPage.verifySuccessNotification();
         val payStatus = SQLHelper.getPaymentStatus();
@@ -53,11 +48,13 @@ public class PaymentByCardTest {
 
     @Test
     @DisplayName("Поля заполнены валидными значениями и номером карты DECLINED")
+    //Баг<=================================================================
     public void shouldPaymentByCardWithDeclinedStatus() {
         val payPage = mainPage.clickByuButton();
         val info = new CardData(getDeclinedCardNumber(), getValidMonthFromNow(), getValidYearFromNow(), getValidOwner(), getValidCVC());
+        payPage.byuButtonTitle();
         payPage.fillCardData(info);
-        payPage.verifySuccessNotification();
+        payPage.verifyErrorNotification();
         val payStatus = SQLHelper.getPaymentStatus();
         assertEquals("DECLINED", payStatus);
     }
