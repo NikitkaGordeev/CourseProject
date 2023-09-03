@@ -6,7 +6,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class SQLHelper {
     private static QueryRunner runner = new QueryRunner();
@@ -20,23 +19,23 @@ public class SQLHelper {
     public static void cleanBD() {
         val deletePaymentEntity = "DELETE FROM payment_entity ";
         val runner = new QueryRunner();
-        try (val conn = DriverManager.getConnection(url, user, password)) {
+        val conn = DriverManager.getConnection(url, user, password);
+        {
             runner.update(conn, deletePaymentEntity);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
         }
     }
 
     @SneakyThrows
     public static String getPaymentStatus() {
-        String statusSQL = "SELECT status FROM payment_entity";
+        String statusSQL = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         return getStatus(statusSQL);
     }
 
     @SneakyThrows
     private static String getStatus(String query) {
         val runner = new QueryRunner();
-        try (val conn = DriverManager.getConnection(url, user, password)) {
+        val conn = DriverManager.getConnection(url, user, password);
+        {
             String status = runner.query(conn, query, new ScalarHandler<String>());
             return status;
         }
